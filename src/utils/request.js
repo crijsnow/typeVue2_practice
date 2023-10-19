@@ -1,6 +1,6 @@
 import axios from 'axios'
 const service = axios.create({
-  baseURL: 'https://api-hmzs.itheima.net/v1',
+  baseURL: 'https://api-hmzs.itheima.net/api',
   timeout: 5000 // request timeout
 })
 
