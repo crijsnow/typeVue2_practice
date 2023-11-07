@@ -108,7 +108,7 @@ export const routes = [
     }]
   },
   {
-    path: '/404',
+    path: '*',
     component: () => import('@/views/404'),
     hidden: true
   }
