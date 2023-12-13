@@ -28,6 +28,7 @@ export default {
     // 退出登录
     logout() {
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      this.$store.commit('user/remove')
     }
   }
 }

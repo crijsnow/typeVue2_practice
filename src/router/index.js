@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import { White_List } from '@/constants/White_List'
 
 Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
+import { getToken } from '@/utils/auth'
 
 export const routes = [
   {
@@ -108,6 +110,27 @@ export const routes = [
     }]
   },
   {
+    path: '/propety',
+    component: Layout,
+    children: [{
+      // 注意：这里路径字符串为空，代表一级菜单无二级菜单
+      path: '',
+      name: 'cost',
+      // 二级路由点，要挂载的组件
+      component: () => import('@/views/Propety/index'),
+      // 左侧路由上标题和图标（图标使用 element-ui 组件库里图标类名（因为左侧导航组件是基于 element-ui 组件库）
+      meta: { title: '物业费管理', icon: 'el-icon-wallet' }
+    }]
+  },
+  {
+    path: '/addcard',
+    component: () => import('@/views/Car/CarCard/add-card.vue')
+  },
+  {
+    path: '/addenterprise',
+    component: () => import('@/views/Park/Enterprise/add.vue')
+  },
+  {
     path: '*',
     component: () => import('@/views/404'),
     hidden: true
@@ -122,6 +145,18 @@ const createRouter = () => new Router({
 })
 
 const router = createRouter()
+
+router.beforeEach((to, from, next) => {
+  const token = getToken()
+  if (token) {
+    next()
+  } else if (White_List.includes(to.path)) {
+    next()
+  } else {
+    next('/login')
+    // next(false)使得切换失败，原地呆着
+  }
+})
 
 // 重置路由方法
 export function resetRouter() {
