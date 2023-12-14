@@ -4,7 +4,7 @@
       <div class="left">
         <span class="arrow" @click="$router.back()"><i class="el-icon-arrow-left" />返回</span>
         <span>|</span>
-        <span>{{ id?'编辑企业':'新增企业' }}</span>
+        <span>{{ title }}</span>
       </div>
       <div class="right">
         黑马程序员
@@ -60,7 +60,7 @@
         </div>
       </div>
     </main>
-    <footer class="add-footer">
+    <footer v-if="review" class="add-footer">
       <div class="btn-container">
         <el-button @click="reset">重置</el-button>
         <el-button type="primary" @click="confirm">确定</el-button>
@@ -103,6 +103,19 @@ export default {
   computed: {
     id() {
       return this.$route.query.id
+    },
+    review() {
+      console.log(this.$route.query.review)
+      return Boolean(this.$route.query.review)
+    },
+    title() {
+      if (this.review) {
+        return '查看企业'
+      } else if (this.id) {
+        return '编辑企业'
+      } else {
+        return '新增企业'
+      }
     }
   },
   async created() {

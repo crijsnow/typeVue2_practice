@@ -19,8 +19,8 @@
         <el-table-column label="操作">
           <template #default="scoped">
             <el-button size="mini" type="text" @click="addrent(scoped.row.id)">添加合同</el-button>
-            <el-button size="mini" type="text">查看</el-button>
-            <el-button size="mini" type="text" @click="$router.push(`/addenterprise?id=${scoped.row.id}`)">编辑</el-button>
+            <el-button size="mini" type="text" @click="$router.push(`/addenterprise?id=${scoped.row.id}&review=`)">查看</el-button>
+            <el-button size="mini" type="text" @click="$router.push(`/addenterprise?id=${scoped.row.id}&review=1`)">编辑</el-button>
             <el-button size="mini" type="text" @click="delitem(scoped.row.id)">删除</el-button>
           </template>
         </el-table-column>
@@ -38,7 +38,7 @@
               </el-table-column>
               <el-table-column label="操作" width="180">
                 <template #default="scope">
-                  <el-button size="mini" type="text" @click="xuzurent">续租</el-button>
+                  <el-button size="mini" type="text" @click="xuzurent(scope.row)">续租</el-button>
                   <el-button size="mini" type="text" :disabled="scope.row.status === 3" @click="outRent(scope.row.id)">退租</el-button>
                   <el-button size="mini" type="text" :disabled="scope.row.status !== 3" @click="delRent(scope.row.id)">删除</el-button>
                 </template>
@@ -143,16 +143,15 @@ export default {
       const res = await getlist(this.params)
       this.datalist = res.data.rows
       this.total = res.data.total
-      // this.dataList = res.data?.rows.filter((item) => {
-      //   this.$set(item, 'rentnow', [])
-      // })
-
-      this.datalist = res.data?.rows.map((item) => {
-        return {
-          ...item,
-          rentnow: [] // 每一行补充存放合同的列表
-        }
+      this.dataList = res.data?.rows.filter((item) => {
+        this.$set(item, 'rentnow', [])
       })
+      // this.datalist = res.data?.rows.map((item) => {
+      //   return {
+      //     ...item,
+      //     rentnow: [] // 每一行补充存放合同的列表
+      //   }
+      // })
     },
     pagechange(cur) {
       this.params.page = cur
@@ -247,10 +246,10 @@ export default {
         // eslint-disable-next-line require-atomic-updates
         this.datalist.map(ele => {
           if (ele.id === row.id) {
-            res.data.forEach(obj => {
-              ele.rentnow.push(obj)
-            })
-            // ele.rentnow.concat(res.data)
+            // res.data.forEach(obj => {
+            //     ele.rentnow.push(obj)
+            // })
+            ele.rentnow = res.data
           }
         })
       }
@@ -309,7 +308,8 @@ export default {
         })
       })
     },
-    async xuzurent() {
+    async xuzurent(row) {
+      console.log(row)
       this.xuzuflag = true
       this.dialogVisible = true
     }

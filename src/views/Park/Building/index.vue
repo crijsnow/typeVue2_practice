@@ -6,6 +6,7 @@
       <el-input v-model="params.name" placeholder="请输入内容" class="search-main" />
       <el-button type="primary" @click="search">查询</el-button>
       <el-button type="primary" @click="dialogVisible=true">添加楼宇</el-button>
+      <el-button @click="exportexcal">导出Excal</el-button>
     </div>
     <!-- 表格区域 -->
     <div class="table">
@@ -14,7 +15,7 @@
         :data="buildingList"
       >
         <el-table-column
-          prop="index"
+          type="index"
           label="序号"
         />
         <el-table-column
@@ -104,6 +105,7 @@
 <script>
 import { getBuildingList, create, deleteI, editI } from '@/apis/buildings.js'
 import { Message } from 'element-ui'
+import { utils, writeFileXLSX } from 'xlsx'
 export default {
   name: 'Building',
   data() {
@@ -191,6 +193,36 @@ export default {
       this.add = {
         id, area, floors, name, propertyFeePrice
       }
+    },
+    async exportexcal() {
+      const res = await getBuildingList({
+        page: 1,
+        pageSize: this.total
+      })
+      const x_rosia = ['序号', '楼宇名称', '层数', '在管面积(m²)', '物业费(元/m²)', '状态']
+      const tableHeader = ['index', 'name', 'floors', 'area', 'propertyFeePrice', 'status']
+      const sheetData = res.data.rows.map((item, index) => {
+        const obj = {}
+        tableHeader.forEach(key => {
+          if (key === 'index') {
+            obj[key] = index + 1
+          } else if (key === 'status') {
+            obj[key] = this.formatStatus(item[key])
+          } else {
+            obj[key] = item[key]
+          }
+        })
+        return obj
+      })
+      // 创建一个工作表
+      const worksheet = utils.json_to_sheet(sheetData)
+      // 创建一个新的工作簿
+      const workbook = utils.book_new()
+      // 把工作表添加到工作簿
+      utils.book_append_sheet(workbook, worksheet, 'Data')
+      // 改写表头
+      utils.sheet_add_aoa(worksheet, [x_rosia], { origin: 'A1' })
+      writeFileXLSX(workbook, 'SheetJSVueAoO.xlsx')
     }
   }
 }
