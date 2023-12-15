@@ -131,6 +131,10 @@ export const routes = [
     component: () => import('@/views/Park/Enterprise/add.vue')
   },
   {
+    path: '/roleadd/:roleId?',
+    component: () => import('@/views/System/Role/add')
+  },
+  {
     path: '*',
     component: () => import('@/views/404'),
     hidden: true

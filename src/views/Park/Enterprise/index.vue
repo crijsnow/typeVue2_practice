@@ -77,6 +77,7 @@
                 :http-request="uploadHandle"
                 :before-upload="beforeUpload"
                 :file-list="rentList"
+                :headers="{Authorization: `Bearer ${$store.state.user.token}`}"
               >
                 <el-button size="small" type="primary" plain>上传合同文件</el-button>
                 <div slot="tip" class="el-upload__tip">支持扩展名：.doc .pdf, 文件大小不超过5M</div>
@@ -103,14 +104,13 @@
 
 <script>
 import { getlist, del, getrbuilding, upload, create_rent, get_rent_list, outrent, del_rent } from '@/apis/enterprise.js'
-
 export default {
   data() {
     return {
       datalist: [],
       params: {
         page: 1,
-        pageSize: 4,
+        pageSize: 10,
         name: ''
       },
       dialogVisible: false,
