@@ -80,3 +80,12 @@ export const get_rent_detail = (id) => {
     url: `/park/enterprise/rent/${id}`
   })
 }
+export const download = (id) => {
+  return request({
+    url: `/download/${id}`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    responseType: 'blob'
+  })
+}

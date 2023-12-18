@@ -28,7 +28,7 @@ export default {
   components: { SidebarItem, Logo },
   computed: {
     routes() {
-      return this.$router.options.routes
+      return this.$store.state.menu.menulist
     },
     activeMenu() {
       const route = this.$route

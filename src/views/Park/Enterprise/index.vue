@@ -7,7 +7,7 @@
       <el-button type="primary" @click="search">查询</el-button>
     </div>
     <div class="create-container">
-      <el-button type="primary" @click="$router.push('/addenterprise')">添加企业</el-button>
+      <el-button v-perms="'park:enterprise:add_edit'" type="primary" @click="$router.push('/addenterprise')">添加企业</el-button>
     </div>
     <!-- 表格区域 -->
     <div class="table">
@@ -19,7 +19,7 @@
         <el-table-column label="操作">
           <template #default="scoped">
             <el-button size="mini" type="text" @click="addrent(scoped.row.id)">添加合同</el-button>
-            <el-button size="mini" type="text" @click="$router.push(`/addenterprise?id=${scoped.row.id}&review=`)">查看</el-button>
+            <el-button size="mini" type="text" @click="$router.push(`/exterpriseDetail?id=${scoped.row.id}&review=`)">查看</el-button>
             <el-button size="mini" type="text" @click="$router.push(`/addenterprise?id=${scoped.row.id}&review=1`)">编辑</el-button>
             <el-button size="mini" type="text" @click="delitem(scoped.row.id)">删除</el-button>
           </template>

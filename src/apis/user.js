@@ -13,3 +13,8 @@ export function loginAPI(data) {
     data
   })
 }
+export const get_user_power = () => {
+  return request({
+    url: '/park/user/profile'
+  })
+}

@@ -10,12 +10,12 @@ import App from './App'
 import store from './store'
 
 import router from './router'
-
+import '@/directives/index.js'
 // 注册svg
 import '@/icons'
-
+import plugin from './components'
 Vue.use(ElementUI)
-
+Vue.use(plugin)
 Vue.config.productionTip = false
 
 // vue实例化

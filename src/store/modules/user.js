@@ -1,10 +1,11 @@
-import { loginAPI } from '@/apis/user'
+import { loginAPI, get_user_power } from '@/apis/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 export default {
   namespaced: true,
   state: () => {
     return {
-      token: getToken() || ''
+      token: getToken() || '',
+      profile: {}
     }
   },
   mutations: {
@@ -15,6 +16,10 @@ export default {
     remove(state) {
       removeToken()
       state.token = ''
+      state.profile = {}
+    },
+    setProfile(state, profile) {
+      state.profile = profile
     }
   },
   actions: {
@@ -23,6 +28,9 @@ export default {
       const res = await loginAPI({ username, password })
       // 2. 提交mutation
       ctx.commit('setToken', res.data.token)
+      const res_1 = await get_user_power()
+      ctx.commit('setProfile', res_1.data)
+      console.log(res_1.data)
     }
   }
 }

@@ -32,6 +32,7 @@
 
 <script>
 import { USER_INFO } from '@/constants/KEY.js'
+import { jiaoben } from '@/views/Login/jiaoben.js'
 export default {
   name: 'Login',
   data() {
@@ -68,7 +69,8 @@ export default {
           // TODO
           console.log('登录')
           await this.$store.dispatch('user/doLogin', this.formData)
-          this.$router.push(`${this.$route.query.redirect || '/'}`)
+          await jiaoben()
+          this.$router.push(`${this.$route.query.redirect || '/workbench'}`)
           if (this.formData.remember) {
             localStorage.setItem(USER_INFO, JSON.stringify(this.formData))
           } else {
