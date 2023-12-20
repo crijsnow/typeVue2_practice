@@ -7,7 +7,8 @@ import { White_List } from '@/constants/White_List'
 Vue.use(Router)
 
 /* Layout */
-import Layout from '@/layout'
+import Layout from '@/layout/index.vue'
+import Layout2 from '@/layout/workspace.vue'
 import { getToken } from '@/utils/auth'
 
 export const routes = [
@@ -23,7 +24,7 @@ export const routes = [
   },
   {
     path: '/workbench',
-    component: Layout,
+    component: Layout2,
     children: [{
       path: '',
       component: () => import('@/views/Workbench/index'),
@@ -139,6 +140,10 @@ export const routes = [
   {
     path: '/roleadd/:roleId?',
     component: () => import('@/views/System/Role/add')
+  },
+  {
+    path: '/addordetail',
+    component: () => import('@/views/Rod/RodWarn/addordetail.vue')
   }
 ]
 

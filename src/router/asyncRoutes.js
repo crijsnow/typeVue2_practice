@@ -1,4 +1,4 @@
-import Layout from '@/layout'
+import Layout from '@/layout/index.vue'
 
 // 1. 动态路由: 需要做权限控制 可以根据不同的权限 数量上的变化
 // 2. 静态路由: 不需要做权限控制 每一个用户都可以看到 初始化的时候初始化一次
