@@ -1,6 +1,9 @@
 <template>
   <div class="navbar">
     <div class="right-menu">
+      <div class="son">
+        <el-button size="small" plain @click="$router.push('/big-screen')">可视化大屏</el-button>
+      </div>
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <!-- 用户名称 -->
@@ -87,7 +90,9 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-
+    .son{
+      margin: 6px 15px;
+    }
     &:focus {
       outline: none;
     }

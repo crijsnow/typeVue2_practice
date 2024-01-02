@@ -4,7 +4,7 @@ import { Message } from 'element-ui'
 import store from '@/store/index.js'
 
 const service = axios.create({
-  baseURL: 'https://api-hmzs.itheima.net/tj',
+  baseURL: process.env.VUE_APP_BASE_URL,
   timeout: 5000 // request timeout
 })
 // 请求拦截器

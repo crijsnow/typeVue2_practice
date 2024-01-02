@@ -13,6 +13,9 @@ import { getToken } from '@/utils/auth'
 
 export const routes = [
   {
+    path: '/big-screen'
+  },
+  {
     path: '/login',
     component: () => import('@/views/Login/index'),
     hidden: true
